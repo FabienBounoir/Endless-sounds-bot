@@ -11,34 +11,36 @@ var dispatcher = ""
 
 //lancé lorsque le bot est ready
 client.on("ready", () => {
-    const channel = client.channels.cache.get(process.env.VOC || config.voc);
-    if (!channel) return console.error("The channel does not exist!");
-    channel.join().then(connection => {
-      // Yay, it worked!
-    console.log("Successfully connected.");
-
-    play(connection)
-
-    connection.play( ytdl("https://www.youtube.com/watch?v=nvYi3XlP8sk", { filter: 'audioonly' }),{volume: 0.5,});
-
-    }).catch(e => {
-      // Oh no, it errored! Let's log it to console :)
-    console.error(e);
-    });
+    play()
 }); 
 
 //methode qui gere les message entré dans le tchat
-client.on('message', async message => {
-    //test si message envoyer par un bot
-    if(message.author.bot) return;
-});
+// client.on('message', async message => {
+//     //test si message envoyer par un bot
+//     if(message.author.bot) return;
+// });
 
-function play(connection)
+function play()
 {
-    dispatcher = connection.play( ytdl("https://www.youtube.com/watch?v=nvYi3XlP8sk", { filter: 'audioonly' }),{volume: 0.5,});
+    const channel = client.channels.cache.get(process.env.VOC || config.voc);
+
+    if (!channel) return console.error("The channel does not exist!");
+
+    channel.join().then(connection => {
+
+        console.log("Successfully connected.");
+        connection.play( ytdl("https://www.youtube.com/watch?v=nvYi3XlP8sk", { filter: 'audioonly' }),{volume: 0.5,});
+
+    }).catch(e => {
+
+        console.error(e);
+
+    });
 
     dispatcher.on('finish', () => {
-        play(connection)
+
+        play()
+
     });
 }
 

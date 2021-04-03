@@ -29,7 +29,7 @@ function play()
     channel.join().then(connection => {
 
         console.log("Successfully connected.");
-        dispatcher = connection.play( ytdl("https://www.youtube.com/watch?v=nvYi3XlP8sk", { filter: 'audioonly' }),{volume: 0.5,});
+        dispatcher = connection.play( "./pike-e-girl.mp3",{volume: 0.5,});
         
         dispatcher.on('finish', () => {
 

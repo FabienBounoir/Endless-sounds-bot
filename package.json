@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@discordjs/opus": "^0.4.0",
+    "axios": "^0.21.1",
+    "discord.js": "^12.5.0",
+    "ffmpeg-static": "^4.2.7",
+    "ytdl-core": "^4.5.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

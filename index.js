@@ -29,17 +29,17 @@ function play()
     channel.join().then(connection => {
 
         console.log("Successfully connected.");
-        connection.play( ytdl("https://www.youtube.com/watch?v=nvYi3XlP8sk", { filter: 'audioonly' }),{volume: 0.5,});
+        dispatcher = connection.play( ytdl("https://www.youtube.com/watch?v=nvYi3XlP8sk", { filter: 'audioonly' }),{volume: 0.5,});
+        
+        dispatcher.on('finish', () => {
+
+            play()
+    
+        });
 
     }).catch(e => {
 
         console.error(e);
-
-    });
-
-    dispatcher.on('finish', () => {
-
-        play()
 
     });
 }

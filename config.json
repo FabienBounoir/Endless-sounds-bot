@@ -1,4 +1,5 @@
 {
-    "token": "token-Discord",
-    "voc": "channel-ID"
+    "token": "token",
+    "voc": "channel",
+    "administrateur": "admin bot"
 }

@@ -7,6 +7,7 @@ const axios = require('axios').default;
 const ytdl = require('ytdl-core');
 const fs = require("fs")
 
+var administrateur= process.env.ADMINISTRATEUR || config.administrateur 
 var dispatcher = ""
 
 //lancé lorsque le bot est ready
@@ -54,6 +55,7 @@ client.on('message', async message => {
             sendMessage("cette commande est reserver a l'administrateur <@"+administrateur+"> !!")
             return;
         }
+
         message.member.voice.channel.leave();
         play()
     }

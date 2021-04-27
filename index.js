@@ -57,9 +57,14 @@ client.on('message', async message => {
         }
         else
         {
+
+            setTimeout(() => {
+                play();
+            }, 2000);
+
             message.member.voice.channel.leave();
             message.channel.send("Reload En Cours...")
-            play()
+            dispatcher = "";
         }
     }
 

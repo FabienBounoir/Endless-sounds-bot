@@ -12,6 +12,14 @@ var dispatcher = ""
 
 //lancé lorsque le bot est ready
 client.on("ready", () => {
+    client.user.setPresence({
+        status: 'online',
+            activity: {
+                name: 'du Egirl de Pike',
+                type: 'STREAMING',
+                url: 'https://www.youtube.com/watch?v=nvYi3XlP8sk'
+            }
+    })
     play()
 }); 
 
@@ -69,7 +77,7 @@ client.on('message', async message => {
     }
 
 
-    if(message.content == "!parole")
+    if(message.content == "!paroleEgirl")
     {
         try {
             message.channel.send(`REFRAIN:

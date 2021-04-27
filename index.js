@@ -52,12 +52,15 @@ client.on('message', async message => {
     {
         if(message.author.id != administrateur)
         {
-            sendMessage("cette commande est reserver a l'administrateur <@"+administrateur+"> !!")
+            message.channel.send("cette commande est reserver a l'administrateur <@"+administrateur+"> !!")
             return;
         }
-
-        message.member.voice.channel.leave();
-        play()
+        else
+        {
+            message.member.voice.channel.leave();
+            message.channel.send("Reload En Cours...")
+            play()
+        }
     }
 
 

@@ -6,9 +6,23 @@ const config = require('./config.json');
 const axios = require('axios').default;
 const ytdl = require('ytdl-core');
 const fs = require("fs")
+const mongoose = require('mongoose');
+var ComptePlayEgirl = require('./model/ComptePlayEgirl.js');
 
 var administrateur= process.env.ADMINISTRATEUR || config.administrateur 
+var userDB = process.env.USERDB || config.UserDB;
+var passwordDB = process.env.PASSWORDDB || config.PasswordDB;
+
 var dispatcher = ""
+
+const url = "mongodb+srv://"+ userDB +":"+ passwordDB +"@cluster0.s8x9g.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; 
+
+mongoose.connect(url, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: true,
+});
 
 //lancé lorsque le bot est ready
 client.on("ready", () => {
@@ -42,6 +56,7 @@ function play()
         
         dispatcher.on('finish', () => {
 
+            ajoutPlay()
             play()
     
         });
@@ -53,9 +68,76 @@ function play()
     });
 }
 
+//ajouté +1 quand la musique se fini
+function ajoutPlay()
+{
+    //Recuperation channel disponible dans la BDD
+    ComptePlayEgirl.find().exec((erreur, playCount) => {
+
+        if (erreur) return console.error(err);
+
+        if(playCount.length == 0)
+        {
+            const addComptePlayEgirl = new ComptePlayEgirl({
+                nombrePlay: 1
+            });
+
+            addComptePlayEgirl.save((err) => {
+                if (err) return console.error(err);
+            });
+        }
+        else
+        {
+            var newvalues = {nombrePlay: playCount[0].nombrePlay + 1 };
+
+            ComptePlayEgirl.updateOne(playCount[0], newvalues, function(err, res) {
+                if (err) throw err;
+            });
+
+        }
+    });
+}
+
+//convertir le nombre de seconde en Heure / minute / seconde 
+function format(time) {   
+    // Hours, minutes and seconds
+    var hrs = ~~(time / 3600);
+    var mins = ~~((time % 3600) / 60);
+    var secs = ~~time % 60;
+
+    // Output like "1:01" or "4:03:59" or "123:03:59"
+    var ret = "";
+    if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs;
+    return ret;
+}
+
 //methode qui gere les message entré dans le tchat
 client.on('message', async message => {
 
+    //commande qui renvoie des stats sur le bot (nbplay / nbTime)
+    if(message.content == "!statEgirl")
+    {
+        ComptePlayEgirl.find().exec((erreur, playCount) => {
+            if (erreur) return console.error(err);
+    
+            const XpEmbed = new MessageEmbed()
+                .setColor('#f372ff')
+                .setTitle('Nombres de play Egirl Pike')
+                .setURL('https://www.youtube.com/watch?v=nvYi3XlP8sk')
+                .setDescription("**Nb Play: " + playCount[0].nombrePlay + "**")
+                .addField('Équivalant à **' + format(playCount[0].nombrePlay * 209) + "**", '\u200B', true)
+                .setTimestamp()
+                .setFooter('Bot crée par BadbounsTV', 'https://media.discordapp.net/attachments/815030909010444318/822519435268718613/miniLogoRGB.gif');
+            
+                message.channel.send(XpEmbed)
+        })
+    }
+
+    //commande qui reload le bot
     if(message.content == "!reloadEgirl")
     {
         if(message.author.id != administrateur)
@@ -76,7 +158,7 @@ client.on('message', async message => {
         }
     }
 
-
+    //commande qui nous donne les paroles de la musique
     if(message.content == "!paroleEgirl")
     {
         try {

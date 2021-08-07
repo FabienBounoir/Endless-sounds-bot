@@ -119,7 +119,7 @@ function format(time) {
 client.on('message', async message => {
 
     //commande qui renvoie des stats sur le bot (nbplay / nbTime)
-    if(message.content == "!statEgirl")
+    if(message.content.toLowerCase() == "!stategirl")
     {
         ComptePlayEgirl.find().exec((erreur, playCount) => {
             if (erreur) return console.error(err);
@@ -138,7 +138,7 @@ client.on('message', async message => {
     }
 
     //commande qui reload le bot
-    if(message.content == "!reloadEgirl")
+    if(message.content.toLowerCase() == "!reloadegirl")
     {
         if(message.author.id != administrateur)
         {
@@ -159,7 +159,7 @@ client.on('message', async message => {
     }
 
     //commande qui nous donne les paroles de la musique
-    if(message.content == "!paroleEgirl")
+    if(message.content.toLowerCase() == "!paroleegirl")
     {
         try {
             message.channel.send(`REFRAIN:

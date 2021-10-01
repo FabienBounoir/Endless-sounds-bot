@@ -14,6 +14,7 @@ var userDB = process.env.USERDB || config.UserDB;
 var passwordDB = process.env.PASSWORDDB || config.PasswordDB;
 
 var dispatcher = ""
+var musiqueList = []
 
 const url = "mongodb+srv://"+ userDB +":"+ passwordDB +"@cluster0.s8x9g.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; 
 
@@ -26,6 +27,13 @@ mongoose.connect(url, {
 
 //lancé lorsque le bot est ready
 client.on("ready", () => {
+
+    fs.readdirSync("./musique/").forEach(file => {
+        musiqueList.push(file);
+    });
+
+    console.log(musiqueList)
+
     client.user.setPresence({
         status: 'online',
             activity: {
@@ -34,6 +42,7 @@ client.on("ready", () => {
                 url: 'https://www.youtube.com/watch?v=nvYi3XlP8sk'
             }
     })
+
     play()
 }); 
 
@@ -52,13 +61,11 @@ function play()
     channel.join().then(connection => {
 
         console.log("Successfully connected.");
-        dispatcher = connection.play( "./pike-e-girl.mp3",{volume: 0.5,});
+        dispatcher = connection.play( "./" + musiqueList[parseInt(Math.random() * musiqueList.length)],{volume: 0.5,});
         
         dispatcher.on('finish', () => {
-
             ajoutPlay()
             play()
-    
         });
 
     }).catch(e => {

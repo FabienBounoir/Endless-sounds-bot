@@ -16,6 +16,8 @@ var passwordDB = process.env.PASSWORDDB || config.PasswordDB;
 var dispatcher = ""
 var musiqueList = []
 
+var musiqueEnCours = ""
+
 const url = "mongodb+srv://"+ userDB +":"+ passwordDB +"@cluster0.s8x9g.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"; 
 
 mongoose.connect(url, {
@@ -59,9 +61,9 @@ function play()
     if (!channel) return console.error("The channel does not exist!");
 
     channel.join().then(connection => {
-
-        console.log("Successfully connected.");
-        dispatcher = connection.play( "./" + musiqueList[parseInt(Math.random() * musiqueList.length)],{volume: 0.5,});
+        musiqueEnCours = musiqueList[parseInt(Math.random() * musiqueList.length)]
+        console.log(musiqueEnCours)
+        dispatcher = connection.play( "./" + musiqueEnCours,{volume: 0.5,});
         
         dispatcher.on('finish', () => {
             ajoutPlay()
@@ -130,17 +132,34 @@ client.on('message', async message => {
     {
         ComptePlayEgirl.find().exec((erreur, playCount) => {
             if (erreur) return console.error(err);
-    
-            const XpEmbed = new MessageEmbed()
+            
+
+            if(musiqueEnCours == "pike-e-girl.mp3")
+            {
+                const XpEmbed = new MessageEmbed()
                 .setColor('#f372ff')
-                .setTitle('Nombres de play Egirl Pike')
+                .setTitle("Nombres de Musique Joué par Egirl'Bot")
                 .setURL('https://www.youtube.com/watch?v=nvYi3XlP8sk')
                 .setDescription("**Nb Play: " + playCount[0].nombrePlay + "**")
                 .addField('Équivalant à **' + format(playCount[0].nombrePlay * 209) + "**", '\u200B', true)
                 .setTimestamp()
                 .setFooter('Bot crée par BadbounsTV', 'https://media.discordapp.net/attachments/815030909010444318/822519435268718613/miniLogoRGB.gif');
-            
+
                 message.channel.send(XpEmbed)
+            }
+            else
+            {
+                const XpEmbed = new MessageEmbed()
+                .setColor('#f372ff')
+                .setTitle("Nombres de Musique Joué par Egirl'Bot")
+                .setURL('https://www.youtube.com/watch?v=ltuAhZH6PmA')
+                .setDescription("**Nb Play: " + playCount[0].nombrePlay + "**")
+                .addField('Équivalant à **' + format(playCount[0].nombrePlay * 209) + "**", '\u200B', true)
+                .setTimestamp()
+                .setFooter('Bot crée par BadbounsTV', 'https://media.discordapp.net/attachments/815030909010444318/822519435268718613/miniLogoRGB.gif');
+
+                message.channel.send(XpEmbed)
+            }
         })
     }
 

@@ -1,4 +1,4 @@
-# Egirl-bot
+# Pike-bot
 
 Un Bot réaliser en 10 minutes qui joue une musique en boucle dans un channel spécifique, avec enregistrement du nombre de musique jouée
 

@@ -1,15 +1,15 @@
 # Endless-sounds-bot
 
-Un bot Discord conçu pour jouer en boucle une musique spécifique dans un canal de votre serveur, avec enregistrement du nombre de lectures de cette musique. Ce bot a été développé en seulement 10 minutes grâce à sa simplicité d'utilisation et de configuration.
+A Discord bot designed to loop a specific music in a channel of your server, recording the number of plays of this music. This bot was developed in only 10 minutes thanks to its ease of use and configuration.
 
 ## Configuration
 
-Pour configurer ce bot, vous devez ajouter votre token de bot, l'ID du channel dans lequel vous souhaitez diffuser la musique en boucle, et les informations d'accès à votre base de données MongoDB dans le fichier config.json. Assurez-vous de suivre les instructions de configuration attentivement pour que le bot fonctionne correctement.
+To configure this bot, you need to add your bot token, the ID of the channel in which you want to play the looped music, and the access information to your MongoDB database in the config.json file. Be sure to follow the configuration instructions carefully so that the bot works properly.
 
-## En action
+## In Action
 
-Pour voir ce bot en action, rendez-vous sur ce lien : __**https://discord.gg/KxedRVTutX**__. Rejoignez le serveur Discord et naviguez jusqu'au channel où la musique en boucle est diffusée pour l'entendre en direct. N'hésitez pas à inviter vos amis et votre communauté pour partager l'expérience avec eux !
+To see this bot in action, go to this link: __**https://discord.gg/KxedRVTutX**__. Join the Discord server and navigate to the channel where the looped music is playing to hear it live. Feel free to invite your friends and community to share the experience with them!
 
-## Remarques
+## Remarks
 
-N'oubliez pas de lire attentivement les instructions de configuration et de respecter les règles du serveur Discord où vous utilisez ce bot. Si vous rencontrez des problèmes ou si vous avez des suggestions d'amélioration, n'hésitez pas à ouvrir une issue sur le dépôt GitHub de ce projet. Nous sommes impatients de vous aider à tirer le meilleur parti de ce bot !
+Remember to read the configuration instructions carefully and to respect the rules of the Discord server where you use this bot. If you encounter any problems or have suggestions for improvement, feel free to open an issue on the GitHub repository for this project. We look forward to helping you get the most out of this bot!
